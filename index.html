@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>QuickFile</title>
+    <script type="text/javascript">
+      // get the url parameters
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      // check to see if the filename and extension exist
+      if(urlParams.has('fl')) {
+          var fileName = urlParams.get('fl');
+      } else {
+          var fileName = 'file';
+      }
+      if(urlParams.has('xt')) {
+          var fileExt = urlParams.get('xt');
+      } else {
+        var fileExt = 'txt';
+      }
+
+      // check to see if a newline character has been provided
+      if(urlParams.has('nl')) {
+          var strNewLine = urlParams.get('nl');
+      } else {
+          var strNewLine = '|';
+      }
+
+      // check to see if any content has been provided
+      if(urlParams.has('ct')) {
+          // convert url encoded string back to multiline string
+          var strContent = urlParams.get('ct');
+          var strFile = strContent.replaceAll('|','\n');
+
+          // create the file for download
+          const a = document.createElement('a');
+          const file = new Blob([strFile], {type: 'text/plain'});
+          
+          // generate the download link
+          a.href= URL.createObjectURL(file);
+          a.download = fileName + '.' + fileExt;
+          a.click();
+          URL.revokeObjectURL(a.href);
+      } else {
+          console.log('no content');
+      }
+      Window.close();
+    </script>
+  </head>
+</html>
