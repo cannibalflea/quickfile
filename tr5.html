@@ -4,7 +4,7 @@
     <script type="text/javascript">
       // default name for the new file
       const fileName = 'vdtemp.tr5';
-      
+
       // get the url parameters
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
@@ -18,13 +18,13 @@
 
           // build the preabmle for the tr5 file
           var strFile = '[TRIM Context Reference]\nDB=VP\nType=6';
-          strFile += '\nItems=${countIDs}';
+          strFile += `\nItems=${countIDs}`;
 
           // iterate through the list of IDs
           for (let i=0; i < arrIDs.length; i++) {
             // Runs 5 times, with values of step 0 through 4.
-            strFile += '\n[Item${i}]';
-            strFile += '\nURI=${arrIDs[i]}';
+            strFile += `\n[Item${i}]`;
+            strFile += `\nURI=${arrIDs[i]}`;
           }
 
           // create the file for download
