@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>QuickFile - TR5</title>
+    <script type="text/javascript">
+      // default name for the new file
+      const fileName = 'vdtemp.tr5';
+      
+      // get the url parameters
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      // check to see if any content has been provided
+      if(urlParams.has('id')) {
+          // convert url encoded string of unique IDs to array of IDs
+          var strIDs = urlParams.get('id');
+          var arrIDs = strIDs.split('|');
+          var countIDs = arrIDs.length;
+
+          // build the preabmle for the tr5 file
+          var strFile = '[TRIM Context Reference]\nDB=VP\nType=6';
+          strFile += '\nItems=${countIDs}';
+
+          // iterate through the list of IDs
+          for (let i=0; i < arrIDs.length; i++) {
+            // Runs 5 times, with values of step 0 through 4.
+            strFile += '\n[Item${i}]';
+            strFile += '\nURI=${arrIDs[i]}';
+          }
+
+          // create the file for download
+          const a = document.createElement('a');
+          const file = new Blob([strFile], {type: 'text/plain'});
+          
+          // generate the download link
+          a.href= URL.createObjectURL(file);
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(a.href);
+      } else {
+          console.log('no content');
+      }
+      let new_window = open(location, '_self').close();
+    </script>
+  </head>
+</html>
