@@ -16,8 +16,16 @@
           var arrIDs = strIDs.split('|');
           var countIDs = arrIDs.length;
 
+          // get the type id (record or saved searches)
+          // records        = 6 (records and containers)
+          // saved searches = 38 
+          var strType = '6';
+          if(urlParams.has('tp')) {
+              strType = urlParams.get('tp');
+          }
+
           // build the preabmle for the tr5 file
-          var strFile = '[TRIM Context Reference]\nDB=VP\nType=6';
+          var strFile = `[TRIM Context Reference]\nDB=VP\nType=${strType}`;
           strFile += `\nItems=${countIDs}`;
 
           // iterate through the list of IDs
